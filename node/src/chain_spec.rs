@@ -2,6 +2,7 @@ use node_kitties_runtime::{
 	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig, Signature, SudoConfig,
 	SystemConfig, WASM_BINARY,
 };
+use node_kitties_runtime::SubstrateKittiesConfig;
 use sc_service::ChainType;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::{sr25519, Pair, Public};
@@ -48,6 +49,7 @@ pub fn development_config() -> Result<ChainSpec, String> {
 		move || {
 			testnet_genesis(
 				wasm_binary,
+
 				// Initial PoA authorities
 				vec![authority_keys_from_seed("Alice")],
 				// Sudo account
@@ -152,5 +154,8 @@ fn testnet_genesis(
 			key: Some(root_key),
 		},
 		transaction_payment: Default::default(),
+		substrate_kitties: SubstrateKittiesConfig {
+			kitties: vec![],
+		},
 	}
 }
