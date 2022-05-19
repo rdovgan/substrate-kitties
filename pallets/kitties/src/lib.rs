@@ -8,8 +8,8 @@ pub mod pallet {
 	use frame_system::pallet_prelude::*;
 	use frame_support::{
 		sp_runtime::traits::Hash,
-		traits::{ Randomness, Currency, tokens::ExistenceRequirement },
-		transactional
+		traits::{Randomness, Currency, tokens::ExistenceRequirement},
+		transactional,
 	};
 	use sp_io::hashing::blake2_128;
 	use scale_info::TypeInfo;
@@ -26,7 +26,8 @@ pub mod pallet {
 	#[scale_info(skip_type_params(T))]
 	#[codec(mel_bound())]
 	pub struct Kitty<T: Config> {
-		pub dna: [u8; 16],   // Using 16 bytes to represent a kitty DNA
+		pub dna: [u8; 16],
+		// Using 16 bytes to represent a kitty DNA
 		pub price: Option<BalanceOf<T>>,
 		pub gender: Gender,
 		pub owner: AccountOf<T>,
@@ -41,7 +42,7 @@ pub mod pallet {
 	}
 
 	#[pallet::pallet]
-	#[pallet::generate_store(pub(super) trait Store)]
+	#[pallet::generate_store(pub (super) trait Store)]
 	pub struct Pallet<T>(_);
 
 	// Configure the pallet by specifying the parameters and types on which it depends.
@@ -88,7 +89,7 @@ pub mod pallet {
 
 	// Events.
 	#[pallet::event]
-	#[pallet::generate_deposit(pub(super) fn deposit_event)]
+	#[pallet::generate_deposit(pub (super) fn deposit_event)]
 	pub enum Event<T: Config> {
 		/// A new Kitty was successfully created. \[sender, kitty_id\]
 		Created(T::AccountId, T::Hash),
@@ -164,7 +165,7 @@ pub mod pallet {
 		pub fn set_price(
 			origin: OriginFor<T>,
 			kitty_id: T::Hash,
-			new_price: Option<BalanceOf<T>>
+			new_price: Option<BalanceOf<T>>,
 		) -> DispatchResult {
 			let sender = ensure_signed(origin)?;
 
@@ -185,7 +186,7 @@ pub mod pallet {
 		pub fn transfer(
 			origin: OriginFor<T>,
 			to: T::AccountId,
-			kitty_id: T::Hash
+			kitty_id: T::Hash,
 		) -> DispatchResult {
 			let from = ensure_signed(origin)?;
 
@@ -212,7 +213,7 @@ pub mod pallet {
 		pub fn buy_kitty(
 			origin: OriginFor<T>,
 			kitty_id: T::Hash,
-			bid_price: BalanceOf<T>
+			bid_price: BalanceOf<T>,
 		) -> DispatchResult {
 			let buyer = ensure_signed(origin)?;
 
@@ -256,7 +257,7 @@ pub mod pallet {
 		pub fn breed_kitty(
 			origin: OriginFor<T>,
 			parent1: T::Hash,
-			parent2: T::Hash
+			parent2: T::Hash,
 		) -> DispatchResult {
 			let sender = ensure_signed(origin)?;
 
