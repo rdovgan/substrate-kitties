@@ -39,6 +39,7 @@ pub mod pallet {
 	pub enum Gender {
 		Male,
 		Female,
+		Other,
 	}
 
 	#[pallet::pallet]
@@ -278,9 +279,10 @@ pub mod pallet {
 	impl<T: Config> Pallet<T> {
 		fn gen_gender() -> Gender {
 			let random = T::KittyRandomness::random(&b"gender"[..]).0;
-			match random.as_ref()[0] % 2 {
+			match random.as_ref()[0] % 3 {
 				0 => Gender::Male,
-				_ => Gender::Female,
+				1 => Gender::Female,
+				_ => Gender::Other,
 			}
 		}
 
